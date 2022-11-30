@@ -1,5 +1,7 @@
 package br.com.jdbc.model;
 
+import java.lang.Long;
+
 import java.util.Calendar;
 
 public class Contact {
