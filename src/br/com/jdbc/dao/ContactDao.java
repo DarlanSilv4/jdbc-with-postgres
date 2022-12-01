@@ -94,6 +94,31 @@ public class ContactDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public Contact getById(Long id) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM contacts WHERE id =?");
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			Contact contact = new Contact();
+			contact.setId(rs.getLong("id"));
+			contact.setName(rs.getString("name"));
+			contact.setEmail(rs.getString("email"));
+			contact.setAddress(rs.getString("address"));
+			
+			Calendar date = Calendar.getInstance();
+			date.setTime(rs.getDate("birthday"));
+			contact.setBirthday(date);
+			
+			rs.close();
+			stmt.close();
+			return contact;
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
 
