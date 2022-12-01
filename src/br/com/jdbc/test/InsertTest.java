@@ -5,7 +5,7 @@ import java.util.Calendar;
 import br.com.jdbc.dao.ContactDao;
 import br.com.jdbc.model.Contact;
 
-public class TestInsert {
+public class InsertTest {
 
 	public static void main(String[] args) {
 		Contact contact = new Contact();
