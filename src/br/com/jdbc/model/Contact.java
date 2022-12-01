@@ -1,8 +1,9 @@
 package br.com.jdbc.model;
 
 import java.lang.Long;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Contact {
 	private Long id;
@@ -50,6 +51,19 @@ public class Contact {
 	
 	public void setBirthday(Calendar birthday) {
 		this.birthday = birthday;
+	}
+	
+	public void printOut() {
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		System.out.println("Name: "+ this.getName());
+		System.out.println("Email: "+ this.getEmail());
+		System.out.println("Address: "+ this.getAddress());
+		
+		Date date = this.getBirthday().getTime();
+		String formattedDate = simpleDateFormat.format(date);
+		System.out.println("Birthday: "+ formattedDate+ "\n");
 	}
 	
 }
