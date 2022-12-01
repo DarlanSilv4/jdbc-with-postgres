@@ -1,5 +1,7 @@
 package br.com.jdbc.test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import br.com.jdbc.dao.ContactDao;
@@ -11,11 +13,17 @@ public class TestList {
 		ContactDao dao = new ContactDao();
 		List<Contact> contacts = dao.getList();
 		
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
 		for (Contact contact : contacts) {
 			System.out.println("Name: "+ contact.getName());
 			System.out.println("Email: "+ contact.getEmail());
 			System.out.println("Address: "+ contact.getAddress());
-			System.out.println("Birthday: "+ contact.getBirthday().getTime() + "\n");
+			
+			Date date = contact.getBirthday().getTime();
+			String formattedDate = simpleDateFormat.format(date);
+			System.out.println("Birthday: "+ formattedDate+ "\n");
 		}
 	}
 
