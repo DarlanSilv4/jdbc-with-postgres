@@ -20,7 +20,7 @@ public class ContactDao {
 	}
 	
 	public void add(Contact contact) {
-		String sql = "insert into contacts "+"(name,email,address,birthday) " + "values (?,?,?,?)";
+		String sql = "INSERT INTO contacts "+"(name,email,address,birthday) " + "VALUES (?,?,?,?)";
 		
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class ContactDao {
 	public List<Contact> getList(){
 		try {
 			List<Contact> contacts = new ArrayList<Contact>();
-			PreparedStatement stmt = this.connection.prepareStatement("select * from contacts");
+			PreparedStatement stmt = this.connection.prepareStatement("SELECT * FROM contacts");
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
@@ -63,4 +63,37 @@ public class ContactDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public List<Contact> searchByName(String name){ 
+		List<Contact> contacts = new ArrayList<Contact>();
+		try {
+			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM contacts WHERE name ILIKE '%" + name + "%'");
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Contact contact = new Contact();
+				contact.setId(rs.getLong("id"));
+				contact.setName(rs.getString("name"));
+				contact.setEmail(rs.getString("email"));
+				contact.setAddress(rs.getString("address"));
+				
+				Calendar date = Calendar.getInstance();
+				date.setTime(rs.getDate("birthday"));
+				contact.setBirthday(date);
+				
+				contacts.add(contact);
+			}
+			rs.close();
+			stmt.close();
+			
+			if(contacts.isEmpty()) {
+				System.out.println("404 - Not Found!");
+			}
+			return contacts;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
+
+
