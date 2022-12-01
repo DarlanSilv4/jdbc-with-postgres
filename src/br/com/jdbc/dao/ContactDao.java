@@ -119,6 +119,25 @@ public class ContactDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void update(Contact contact) {
+		String sql = "UPDATE contacts SET name=?, email=?, address=?, birthday=? WHERE id=?";
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, contact.getName());
+			stmt.setString(2, contact.getEmail());
+			stmt.setString(3, contact.getAddress());
+			stmt.setDate(4, new Date(contact.getBirthday().getTimeInMillis()));
+			stmt.setLong(5, contact.getId());
+			
+			stmt.execute();
+			System.out.println("Updated!");
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
 
