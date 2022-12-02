@@ -138,6 +138,19 @@ public class ContactDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void delete(Contact contact) {
+		try {
+			PreparedStatement stmt = connection.prepareStatement("DELETE FROM contacts WHERE id=?");
+			stmt.setLong(1, contact.getId());
+			stmt.execute();
+			System.out.println("Deleted!");
+			stmt.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
+
 
 
